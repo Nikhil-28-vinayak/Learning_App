@@ -4,6 +4,7 @@ package com.example.learningapp.screens.loginscreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -18,11 +19,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -40,6 +44,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +68,7 @@ fun LoginScreen() {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -126,7 +133,8 @@ fun LoginScreen() {
                 focusedBorderColor = Color.Transparent,
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
-                unfocusedPlaceholderColor = Color.Gray
+                unfocusedPlaceholderColor = Color.Gray,
+                focusedPlaceholderColor = Color.Gray
             ),
             singleLine = true
         )
@@ -142,10 +150,22 @@ fun LoginScreen() {
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 unfocusedContainerColor = LightBlue,
-                focusedContainerColor = LightBlue,
-                unfocusedPlaceholderColor = Color.Gray
+                focusedContainerColor = LightBlue ,
+                unfocusedPlaceholderColor = Color.Gray,
+                focusedPlaceholderColor = Color.Gray
             ),
-            singleLine = true
+            singleLine = true,
+            trailingIcon = {
+                Icon(
+                    painter = painterResource( if (!showPassword)R.drawable.img_4 else R.drawable.img_9),
+                    contentDescription = "eye",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(if(!showPassword)imageSize * 0.11f else imageSize *  0.145f)
+                        .clickable { if (showPassword) showPassword = false else showPassword= true }
+                )
+            },
+
+            visualTransformation = if (!showPassword) PasswordVisualTransformation() else VisualTransformation.None
         )
         Spacer(modifier = Modifier.height(screenHeight * 0.1f * 0.4f))
         Button(
@@ -156,6 +176,9 @@ fun LoginScreen() {
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Yellow
+            ),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 4.dp
             )
         ) {
             Text(
@@ -164,7 +187,7 @@ fun LoginScreen() {
                 color = Color.White
             )
         }
-        Spacer(modifier = Modifier.height(screenHeight * 0.1f * 0.1f))
+        Spacer(modifier = Modifier.height(screenHeight * 0.1f * 0.2f))
         Text(
             "Forget Password?",
             color = LightOceanGreen,
@@ -178,9 +201,23 @@ fun LoginScreen() {
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(screenHeight * 0.1f * 0.2f))
-        Image(painter = painterResource(R.drawable.img_2),
+        Image(
+            painter = painterResource(R.drawable.img_2),
             contentDescription = "other options for login",
-            modifier = Modifier.size(height = screenHeight * 0.1f, width = logoSize))
+            modifier = Modifier.size(height = screenHeight * 0.1f, width = logoSize)
+        )
+        Spacer(modifier = Modifier.height(screenHeight * 0.1f * 0.2f))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Don't have an account?")
+            Spacer(modifier = Modifier.width(imagePadding * 0.1f * 0.1f))
+            Text(
+                "Create new",
+                textDecoration = TextDecoration.Underline,
+                style = MaterialTheme.typography.bodyMedium,
+                color = LightOceanGreen,
+            )
+        }
     }
 
 }
