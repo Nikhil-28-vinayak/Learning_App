@@ -136,7 +136,9 @@ fun LoginScreen() {
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             ),
             singleLine = true
         )
@@ -154,7 +156,9 @@ fun LoginScreen() {
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             ),
             singleLine = true,
             trailingIcon = {

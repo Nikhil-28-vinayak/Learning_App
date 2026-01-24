@@ -2,7 +2,10 @@ package com.example.learningapp.screens.signupscreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,11 +67,13 @@ fun SignUpScreen() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+    var showPassword1 by remember { mutableStateOf(false) }
+    var showPassword2 by remember { mutableStateOf(false) }
+    var showError by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top =  maxHeight * 0.13f *0.15f )
+            .padding(top = maxHeight * 0.13f * 0.1f)
             .padding(horizontal = maxWidth * 0.06f),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -99,6 +105,7 @@ fun SignUpScreen() {
             value = name,
             onValueChange = { name = it },
             placeholder = { Text("Name") },
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp)),
@@ -108,7 +115,9 @@ fun SignUpScreen() {
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(maxHeight * 0.1f * 0.1f))
@@ -116,6 +125,7 @@ fun SignUpScreen() {
             value = email,
             onValueChange = { email = it },
             placeholder = { Text("Email") },
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp)),
@@ -125,7 +135,9 @@ fun SignUpScreen() {
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             )
         )
         Spacer(modifier = Modifier.height(maxHeight * 0.1f * 0.1f))
@@ -133,6 +145,7 @@ fun SignUpScreen() {
             value = password,
             onValueChange = { password = it },
             placeholder = { Text("Password") },
+            singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp)),
@@ -142,58 +155,79 @@ fun SignUpScreen() {
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             ),
             trailingIcon = {
                 Icon(
-                    painter = painterResource(if (!showPassword) R.drawable.img_4 else R.drawable.img_9),
+                    painter = painterResource(if (!showPassword1) R.drawable.img_4 else R.drawable.img_9),
                     contentDescription = "eye",
                     tint = Color.Gray,
                     modifier = Modifier
-                        .size(if (!showPassword) maxWidth * 0.45f * 0.11f else maxWidth * 0.45f * 0.145f)
+                        .size(if (!showPassword1) maxWidth * 0.45f * 0.11f else maxWidth * 0.45f * 0.145f)
                         .clickable {
-                            if (showPassword) showPassword = false else showPassword = true
+                            if (showPassword1) showPassword1 = false else showPassword1 = true
                         }
                 )
             },
 
-            visualTransformation = if (!showPassword) PasswordVisualTransformation() else VisualTransformation.None
+            visualTransformation = if (!showPassword1) PasswordVisualTransformation() else VisualTransformation.None
 
         )
-        Spacer(modifier = Modifier.height(maxHeight * 0.1f * 0.1f))
+        Spacer(modifier = Modifier.height(maxHeight * 0.1f * 0.1f ))
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             placeholder = { Text(" Confirm password") },
+            singleLine = true,
+            isError = showError,
             modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp)),
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 unfocusedContainerColor = LightBlue,
                 focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
-                focusedPlaceholderColor = Color.Gray
+                focusedPlaceholderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black,
+                errorTextColor = Color.Black,
+                errorContainerColor = LightBlue,
+                errorBorderColor = Color.Red
             ),
             trailingIcon = {
                 Icon(
-                    painter = painterResource(if (!showPassword) R.drawable.img_4 else R.drawable.img_9),
+                    painter = painterResource(if (!showPassword2) R.drawable.img_4 else R.drawable.img_9),
                     contentDescription = "eye",
                     tint = Color.Gray,
                     modifier = Modifier
-                        .size(if (!showPassword) maxWidth * 0.45f * 0.11f else maxWidth * 0.45f * 0.145f)
+                        .size(if (!showPassword2) maxWidth * 0.45f * 0.11f else maxWidth * 0.45f * 0.145f)
                         .clickable {
-                            if (showPassword) showPassword = false else showPassword = true
+                            if (showPassword2) showPassword2 = false else showPassword2 = true
                         }
                 )
             },
 
-            visualTransformation = if (!showPassword) PasswordVisualTransformation() else VisualTransformation.None
+            visualTransformation = if (!showPassword2) PasswordVisualTransformation() else VisualTransformation.None
         )
+        if (showError){
+            Row (modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start){
+                Text(
+                    "Password do not match",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Red
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(maxHeight * 0.45f * 0.1f * 0.4f))
         Button(
-            onClick = {},
+            onClick = {
+                showError = if (password != confirmPassword) true else false
+            },
             modifier = Modifier
                 .fillMaxWidth(0.6f)
                 .height(maxHeight * 0.45f * 0.14f),
@@ -226,7 +260,8 @@ fun SignUpScreen() {
         Spacer(modifier = Modifier.height(maxHeight * 0.45f * 0.1f * 0.2f))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Already have an account?")
+            Text("Already have an account?",
+                color = Color.Black)
             Spacer(modifier = Modifier.width(maxWidth * 0.1f * 0.1f))
             Text(
                 "Login",
