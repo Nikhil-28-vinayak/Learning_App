@@ -60,12 +60,14 @@ import com.example.learningapp.ui.theme.Yellow
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreen() {
+    // for responsive ui
     val config = LocalConfiguration.current
     val imageSize = config.screenWidthDp.dp * 0.45f
     val logoSize = config.screenWidthDp.dp * 0.3f
     val imagePadding = (config.screenHeightDp.dp * 0.5f)
     val screenHeight = config.screenHeightDp.dp * 0.45f
 
+    // for state handling
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
@@ -150,18 +152,21 @@ fun LoginScreen() {
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 unfocusedContainerColor = LightBlue,
-                focusedContainerColor = LightBlue ,
+                focusedContainerColor = LightBlue,
                 unfocusedPlaceholderColor = Color.Gray,
                 focusedPlaceholderColor = Color.Gray
             ),
             singleLine = true,
             trailingIcon = {
                 Icon(
-                    painter = painterResource( if (!showPassword)R.drawable.img_4 else R.drawable.img_9),
+                    painter = painterResource(if (!showPassword) R.drawable.img_4 else R.drawable.img_9),
                     contentDescription = "eye",
                     tint = Color.Gray,
-                    modifier = Modifier.size(if(!showPassword)imageSize * 0.11f else imageSize *  0.145f)
-                        .clickable { if (showPassword) showPassword = false else showPassword= true }
+                    modifier = Modifier
+                        .size(if (!showPassword) imageSize * 0.11f else imageSize * 0.145f)
+                        .clickable {
+                            if (showPassword) showPassword = false else showPassword = true
+                        }
                 )
             },
 
