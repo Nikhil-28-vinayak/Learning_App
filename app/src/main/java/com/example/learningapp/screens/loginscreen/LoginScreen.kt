@@ -110,13 +110,13 @@ fun LoginScreen() {
         ) {
             Text(
                 "HEY!",
-                fontSize = 35.sp,
+                style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Black,
                 color = OceanGreen
             )
             Text(
                 "LOGIN NOW",
-                fontSize = 35.sp,
+                style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Black,
                 color = OceanGreen
             )

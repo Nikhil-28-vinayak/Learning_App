@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.learningapp.screens.loginscreen.LoginScreen
+import com.example.learningapp.screens.signupscreen.SignUpScreen
 import com.example.learningapp.screens.splashscreen.SplashScreen
 import com.example.learningapp.ui.theme.LearningAppTheme
 
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningAppTheme {
-              LoginScreen()
+              SignUpScreen()
             }
         }
     }
